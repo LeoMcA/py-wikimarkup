@@ -2237,7 +2237,7 @@ class Parser(BaseParser):
             i += 4
         full = ''.join(str(x) for x in full)
         if forceTocPosition != -1:
-            return full.replace("<!--MWTOC-->", ''.join(toc), 1)
+            return full.replace("<!--MWTOC-->", ''.join(str(x) for x in toc), 1)
         else:
             return full
 
