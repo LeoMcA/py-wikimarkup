@@ -449,6 +449,10 @@ class BaseParser(object):
         self.tagHooks = {}
         # [[internal link]] hooks
         self.internalLinkHooks = {}
+        self.closeMatchPat = re.compile(r"(</table|</blockquote|</h1|</h2|</h3|</h4|</h5|</h6|"
+                                        r"<td|<th|<div|</div|<hr|</pre|"
+                                        r"</p|" + self.uniq_prefix + r"-pre|"
+                                        r"</li|</ul|</ol|<center)", re.IGNORECASE)
 
     def registerTagHook(self, tag, function):
         self.tagHooks[tag] = function
@@ -1210,7 +1214,7 @@ class BaseParser(object):
     def extractTagsAndParams(self, elements, text, matches):
         """
         Replaces all occurrences of HTML-style comments and the given tags
-        in the text with a random marker and returns teh next text. The output
+        in the text with a random marker and returns the next text. The output
         parameter $matches will be an associative array filled with data in
         the form:
           'UNIQ-xxxxx' => array(
@@ -1461,7 +1465,6 @@ class BaseParser(object):
         mDTopen = inBlockElem = False
         prefixLength = 0
         paragraphStack = False
-        _closeMatchPat = re.compile(r"(</table|</blockquote|</h1|</h2|</h3|</h4|</h5|</h6|<td|<th|<div|</div|<hr|</pre|</p|" +  self.uniq_prefix + r"-pre|</li|</ul|</ol|<center)", re.IGNORECASE)
         mInPre = False
         mLastSection = ''
         mDTopen = False
@@ -1560,7 +1563,7 @@ class BaseParser(object):
                 # No prefix (not in list)--go to paragraph mode
                 # XXX: use a stack for nestable elements like span, table and div
                 openmatch = _openMatchPat.search(t)
-                closematch = _closeMatchPat.search(t)
+                closematch = self.closeMatchPat.search(t)
                 if openmatch or closematch:
                     paragraphStack = False
                     output.append(self.closeParagraph(mLastSection))
@@ -2022,11 +2025,11 @@ class Parser(BaseParser):
         string and re-inserts the newly formatted headlines.
         """
         doNumberHeadings = False
-        showEditLink = True # Can User Edit
 
-        if text.find("__NOEDITSECTION__") != -1:
-            showEditLink = False
-            text = text.replace("__NOEDITSECTION__", "")
+        # For compatibility with MediaWiki and backwards compatibility with ourselves
+        # we'll strip these
+        text = text.replace("__NOEDITSECTION__", "")
+        text = text.replace("__NEWSECTIONLINK__", "")
 
         # Get all headlines for numbering them and adding funky stuff like [edit]
         # links - this is for later, but we need the number of headlines right now
@@ -2037,12 +2040,6 @@ class Parser(BaseParser):
         # unless it's been explicitly enabled.
         enoughToc = self.show_toc and (numMatches >= 4 or text.find("<!--MWTOC-->") != -1)
 
-        # Allow user to stipulate that a page should have a "new section"
-        # link added via __NEWSECTIONLINK__
-        showNewSection = False
-        if text.find("__NEWSECTIONLINK__") != -1:
-            showNewSection = True
-            text = text.replace("__NEWSECTIONLINK__", "")
         # if the string __FORCETOC__ (not case-sensitive) occurs in the HTML,
         # override above conditions and always show TOC above first header
         if text.find("__FORCETOC__") != -1:
@@ -2063,7 +2060,6 @@ class Parser(BaseParser):
         head = {}
         sublevelCount = {}
         levelCount = {}
-        toclevel = 0
         level = 0
         prevlevel = 0
         toclevel = 0
@@ -2226,7 +2222,7 @@ class Parser(BaseParser):
         forceTocPosition = text.find("<!--MWTOC-->")
         full = []
         while i < len_blocks:
-            j = i/4
+            j = i//4
             full.append(blocks[i])
             if enoughToc and not i and isMain and forceTocPosition == -1:
                 full += toc
