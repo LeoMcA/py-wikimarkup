@@ -2276,16 +2276,22 @@ def truncate_url(url, length=40):
     return t_url
 
 
+SAFE_NAME_REMOVE_SLASHES = re.compile(r"[^a-zA-Z0-9\-_\s.]")
+SAFE_NAME_NO_REMOVE_SLASHES = re.compile(r"[^a-zA-Z0-9\-_\s./]")
+SAFE_NAME_PUNCTUATION_TO_HYPHEN = re.compile(r"[\s._]")
+SAFE_NAME_REMOVE_DUPLICATE_HYPHEN = re.compile(r"[-]+")
+
+
 def safe_name(name=None, remove_slashes=True):
     if name is None:
         return None
     name = str2url(name)
     if remove_slashes:
-        name = re.sub(r"[^a-zA-Z0-9\-_\s\.]", "", name)
+        name = SAFE_NAME_REMOVE_SLASHES.sub("", name)
     else:
-        name = re.sub(r"[^a-zA-Z0-9\-_\s\.\/]", "", name)
-    name = re.sub(r"[\s\._]", "-", name)
-    name = re.sub(r"[-]+", "-", name)
+        name = SAFE_NAME_NO_REMOVE_SLASHES.sub("", name)
+    name = SAFE_NAME_PUNCTUATION_TO_HYPHEN.sub("-", name)
+    name = SAFE_NAME_REMOVE_DUPLICATE_HYPHEN.sub("-", name)
     return name.strip("-").lower()
 
 
