@@ -173,7 +173,7 @@ class WikimarkupTestCase(unittest.TestCase):
         self.assertEqual(parse(text), assumed)
 
         text='<script <->alert("foo");</script>'
-        assumed = '<p>&lt;script &lt;-=""&gt;alert("foo");&lt;/script&gt;\n&lt;/p&gt;&lt;/script&gt;</p>'
+        assumed = '<p>&lt;script&gt;alert("foo");&amp;lt;/script&amp;gt;\n&lt;/p&gt;&lt;/script&gt;</p>'
         self.assertEqual(parse(text), assumed)
 
     def test_internal_link_hook_simple(self):
