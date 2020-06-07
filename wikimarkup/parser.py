@@ -34,12 +34,12 @@ MW_COLON_STATE_COMMENT = 5
 MW_COLON_STATE_COMMENTDASH = 6
 MW_COLON_STATE_COMMENTDASHDASH = 7
 
-_attributePat = re.compile(r'''(?:^|\s)([A-Za-z0-9]+)(?:\s*=\s*(?:\"([^<\"]*)\"|\'([^<\']*)\'|([a-zA-Z0-9!#$%&()*,\-./:;<>?@\[\]^_{|}~]+)|#([0-9a-fA-F]+)))''', re.UNICODE)
-_space = re.compile(r'\s+', re.UNICODE)
-_closePrePat = re.compile("</pre", re.UNICODE | re.IGNORECASE)
-_openPrePat = re.compile("<pre", re.UNICODE | re.IGNORECASE)
-_openMatchPat = re.compile("(<table|<blockquote|<h1|<h2|<h3|<h4|<h5|<h6|<pre|<tr|<p|<ul|<ol|<li|</center|</tr|</td|</th)", re.UNICODE | re.IGNORECASE)
-_tagPattern = re.compile(r'^(/?)(\w+)([^>]*?)(/?>)([^<]*)$', re.UNICODE)
+_attributePat = re.compile(r'''(?:^|\s)([A-Za-z0-9]+)(?:\s*=\s*(?:\"([^<\"]*)\"|\'([^<\']*)\'|([a-zA-Z0-9!#$%&()*,\-./:;<>?@\[\]^_{|}~]+)|#([0-9a-fA-F]+)))''')
+_space = re.compile(r'\s+')
+_closePrePat = re.compile("</pre", re.IGNORECASE)
+_openPrePat = re.compile("<pre", re.IGNORECASE)
+_openMatchPat = re.compile("(<table|<blockquote|<h1|<h2|<h3|<h4|<h5|<h6|<pre|<tr|<p|<ul|<ol|<li|</center|</tr|</td|</th)", re.IGNORECASE)
+_tagPattern = re.compile(r'^(/?)(\w+)([^>]*?)(/?>)([^<]*)$')
 
 _htmlpairs = ( # Tags that must be closed
     'b', 'del', 'i', 'ins', 'u', 'font', 'big', 'small', 'sub',
@@ -310,44 +310,44 @@ _htmlEntities = {
     'zwnj':       8204
 }
 
-_charRefsPat = re.compile(r'''(&([A-Za-z0-9]+);|&#([0-9]+);|&#[xX]([0-9A-Za-z]+);|(&))''', re.UNICODE)
-_cssCommentPat = re.compile(r'''\*.*?\*''', re.UNICODE)
-_toUTFPat = re.compile(r'''\\([0-9A-Fa-f]{1,6})[\s]?''', re.UNICODE)
-_hackPat = re.compile(r'''(expression|tps*://|url\s*\().*''', re.UNICODE | re.IGNORECASE)
-_hrPat = re.compile('''^-----*''', re.UNICODE | re.MULTILINE)
-_h1Pat = re.compile('^=(.+)=\s*$', re.UNICODE | re.MULTILINE)
-_h2Pat = re.compile('^==(.+)==\s*$', re.UNICODE | re.MULTILINE)
-_h3Pat = re.compile('^===(.+)===\s*$', re.UNICODE | re.MULTILINE)
-_h4Pat = re.compile('^====(.+)====\s*$', re.UNICODE | re.MULTILINE)
-_h5Pat = re.compile('^=====(.+)=====\s*$', re.UNICODE | re.MULTILINE)
-_h6Pat = re.compile('^======(.+)======\s*$', re.UNICODE | re.MULTILINE)
-_quotePat = re.compile("""(''+)""", re.UNICODE)
+_charRefsPat = re.compile(r'''(&([A-Za-z0-9]+);|&#([0-9]+);|&#[xX]([0-9A-Za-z]+);|(&))''')
+_cssCommentPat = re.compile(r'''\*.*?\*''')
+_toUTFPat = re.compile(r'''\\([0-9A-Fa-f]{1,6})[\s]?''')
+_hackPat = re.compile(r'''(expression|tps*://|url\s*\().*''', re.IGNORECASE)
+_hrPat = re.compile('''^-----*''', re.MULTILINE)
+_h1Pat = re.compile('^=(.+)=\s*$', re.MULTILINE)
+_h2Pat = re.compile('^==(.+)==\s*$', re.MULTILINE)
+_h3Pat = re.compile('^===(.+)===\s*$', re.MULTILINE)
+_h4Pat = re.compile('^====(.+)====\s*$', re.MULTILINE)
+_h5Pat = re.compile('^=====(.+)=====\s*$', re.MULTILINE)
+_h6Pat = re.compile('^======(.+)======\s*$', re.MULTILINE)
+_quotePat = re.compile("""(''+)""")
 _removePat = re.compile(r'\b(' + r'|'.join((u"a", "an", "as", "at", "before", "but", "by", "for", "from",
                          "is", "in", "into", "like", "of", "off", "on", "onto", "per",
                          "since", "than", "the", "this", "that", "to", "up", "via",
-                         "with")) + r')\b', re.UNICODE | re.IGNORECASE)
-_nonWordSpaceDashPat = re.compile(r'[^\w\s\-\./]', re.UNICODE)
-_multiSpacePat = re.compile(r'[\s\-_\./]+', re.UNICODE)
-_spacePat = re.compile(r' ', re.UNICODE)
-_linkPat = re.compile(r'^(?:([A-Za-z0-9]+):)?([^\|]+)(?:\|([^\n]+?))?\]\](.*)$', re.UNICODE | re.DOTALL)
-_bracketedLinkPat = re.compile(r'(?:\[((?:mailto:|git://|irc://|https?://|ftp://|/)[^<>\]\[' + "\x00-\x20\x7f" + r']*)\s*(.*?)\])', re.UNICODE)
+                         "with")) + r')\b', re.IGNORECASE)
+_nonWordSpaceDashPat = re.compile(r'[^\w\s\-\./]')
+_multiSpacePat = re.compile(r'[\s\-_\./]+')
+_spacePat = re.compile(r' ')
+_linkPat = re.compile(r'^(?:([A-Za-z0-9]+):)?([^\|]+)(?:\|([^\n]+?))?\]\](.*)$', re.DOTALL)
+_bracketedLinkPat = re.compile(r'(?:\[((?:mailto:|git://|irc://|https?://|ftp://|/)[^<>\]\[' + "\x00-\x20\x7f" + r']*)\s*(.*?)\])')
 _internalLinkPat = re.compile(r'\[\[(?:(:?[^:\]]*?):\s*)?(.*?)\]\]')
-_protocolPat = re.compile(r'(\b(?:mailto:|irc://|https?://|ftp://))', re.UNICODE)
-_specialUrlPat = re.compile(r'^([^<>\]\[' + "\x00-\x20\x7f" + r']+)(.*)$', re.UNICODE)
-_protocolsPat = re.compile(r'^(mailto:|irc://|https?://|ftp://)$', re.UNICODE)
-_controlCharsPat = re.compile(r'[\]\[<>"' + "\\x00-\\x20\\x7F" + r']]', re.UNICODE)
-_hostnamePat = re.compile(r'^([^:]+:)(//[^/]+)?(.*)$', re.UNICODE)
-_stripPat = re.compile('\\s|\u00ad|\u1806|\u200b|\u2060|\ufeff|\u03f4|\u034f|\u180b|\u180c|\u180d|\u200c|\u200d|[\ufe00-\ufe0f]', re.UNICODE)
-_zomgPat = re.compile(r'^(:*)\{\|(.*)$', re.UNICODE)
-_headerPat = re.compile(r"<[Hh]([1-6])(.*?)>(.*?)</[Hh][1-6] *>", re.UNICODE)
-_templateSectionPat = re.compile(r"<!--MWTEMPLATESECTION=([^&]+)&([^_]+)-->", re.UNICODE)
-_tagPat = re.compile(r"<.*?>", re.UNICODE)
+_protocolPat = re.compile(r'(\b(?:mailto:|irc://|https?://|ftp://))')
+_specialUrlPat = re.compile(r'^([^<>\]\[' + "\x00-\x20\x7f" + r']+)(.*)$')
+_protocolsPat = re.compile(r'^(mailto:|irc://|https?://|ftp://)$')
+_controlCharsPat = re.compile(r'[\]\[<>"' + "\\x00-\\x20\\x7F" + r']]')
+_hostnamePat = re.compile(r'^([^:]+:)(//[^/]+)?(.*)$')
+_stripPat = re.compile('\\s|\u00ad|\u1806|\u200b|\u2060|\ufeff|\u03f4|\u034f|\u180b|\u180c|\u180d|\u200c|\u200d|[\ufe00-\ufe0f]')
+_zomgPat = re.compile(r'^(:*)\{\|(.*)$')
+_headerPat = re.compile(r"<[Hh]([1-6])(.*?)>(.*?)</[Hh][1-6] *>")
+_templateSectionPat = re.compile(r"<!--MWTEMPLATESECTION=([^&]+)&([^_]+)-->")
+_tagPat = re.compile(r"<.*?>")
 _startRegexHash = {}
 _endRegexHash = {}
-_endCommentPat = re.compile(r'(-->)', re.UNICODE)
+_endCommentPat = re.compile(r'(-->)')
 _extractTagsAndParams_n = 1
-_guillemetLeftPat = re.compile(r'(.) (\?|:|;|!|\302\273)', re.UNICODE)
-_guillemetRightPat = re.compile(r'(\302\253) ', re.UNICODE)
+_guillemetLeftPat = re.compile(r'(.) (\?|:|;|!|\302\273)')
+_guillemetRightPat = re.compile(r'(\302\253) ')
 
 def setupAttributeWhitelist():
     common = ( 'id', 'class', 'lang', 'dir', 'title', 'style' )
@@ -1223,7 +1223,7 @@ class BaseParser(object):
 
         taglist = '|'.join(elements)
         if taglist not in _startRegexHash:
-            _startRegexHash[taglist] = re.compile(r"<(" + taglist + r")(\s+[^>]*?|\s*?)(/?>)|<(!--)", re.UNICODE | re.IGNORECASE)
+            _startRegexHash[taglist] = re.compile(r"<(" + taglist + r")(\s+[^>]*?|\s*?)(/?>)|<(!--)", re.IGNORECASE)
         start = _startRegexHash[taglist]
 
         while text != '':
@@ -1257,7 +1257,7 @@ class BaseParser(object):
                     end = _endCommentPat
                 else:
                     if element not in _endRegexHash:
-                        _endRegexHash[element] = re.compile(r'(</' + element + r'\s*>)', re.UNICODE | re.IGNORECASE)
+                        _endRegexHash[element] = re.compile(r'(</' + element + r'\s*>)', re.IGNORECASE)
                     end = _endRegexHash[element]
                 q = end.split(inside, 1)
                 content = q[0]
@@ -1461,7 +1461,7 @@ class BaseParser(object):
         mDTopen = inBlockElem = False
         prefixLength = 0
         paragraphStack = False
-        _closeMatchPat = re.compile(r"(</table|</blockquote|</h1|</h2|</h3|</h4|</h5|</h6|<td|<th|<div|</div|<hr|</pre|</p|" +  self.uniq_prefix + r"-pre|</li|</ul|</ol|<center)", re.UNICODE | re.IGNORECASE)
+        _closeMatchPat = re.compile(r"(</table|</blockquote|</h1|</h2|</h3|</h4|</h5|</h6|<td|<th|<div|</div|<hr|</pre|</p|" +  self.uniq_prefix + r"-pre|</li|</ul|</ol|<center)", re.IGNORECASE)
         mInPre = False
         mLastSection = ''
         mDTopen = False
