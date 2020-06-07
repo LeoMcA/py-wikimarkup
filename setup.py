@@ -16,7 +16,7 @@ setup(
        'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
        'Programming Language :: Python :: 3 :: Only',
     ],
-    python_requires='>=3',
+    python_requires='>=3.5',
     zip_safe=False,
     include_package_data=True,
     install_requires=['bleach>=3.0.0,<4.0.0', 'unidecode>=1.0.0,<2.0.0'],
