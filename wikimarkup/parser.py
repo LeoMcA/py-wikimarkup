@@ -2013,6 +2013,9 @@ class Parser(BaseParser):
 
         return text
 
+    def formatToc(self, toc_string):
+        return '<div id="toc"><h2>{0}</h2>'.format(toc_string)
+
     def formatHeadings(self, text, isMain, toc_string):
         """
         This function accomplishes several tasks:
@@ -2210,7 +2213,7 @@ class Parser(BaseParser):
             if toclevel < wgMaxTocLevel:
                 toc.append("</li>")
                 toc.append("</ul></li>" * max(0, toclevel - 1))
-            toc.insert(0, '<div id="toc"><h2>{0}</h2>'.format(toc_string))
+            toc.insert(0, self.formatToc(toc_string))
             toc.append('</ul></div>')
 
         # split up and insert constructed headlines
