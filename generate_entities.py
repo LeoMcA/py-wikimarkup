@@ -22,6 +22,8 @@ def main():
         names.add(name)
 
         chars = resp[entity]["characters"].encode("unicode_escape").decode('ascii')
+        if '"' in chars:
+            chars = chars.replace('"', '\\"')
         output += f'    "{name}": "{chars}",\n'
     output += "}\n"
 
