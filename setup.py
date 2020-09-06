@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='py-wikimarkup',
-    version='2.0.1',
+    version='2.0.2',
     packages=find_packages(),
     description='A basic MediaWiki markup parser.',
     long_description=open('README.rst').read(),
