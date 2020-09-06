@@ -2,7 +2,7 @@ import os.path
 
 __all__ = ('__version__', '__build__')
 
-__version__ = (1, 0, 2)
+__version__ = (2, 0, 2)
 
 def _get_git_revision(path):
     revision_file = os.path.join(path, 'refs', 'heads', 'master')
