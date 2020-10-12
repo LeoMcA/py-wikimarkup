@@ -1424,6 +1424,10 @@ class Parser(BaseParser):
         text = '\n'.join(text)
         if taggedNewline and text[-1:] == '\n':
             text = text[:-1]
+        text = self.bleach(text, nofollow, attributes, styles, strip_comments)
+        return text
+
+    def bleach(self, text, nofollow, attributes, styles, strip_comments):
         # Pass output through bleach and linkify
         if nofollow:
             callbacks = [bleach.callbacks.nofollow]
