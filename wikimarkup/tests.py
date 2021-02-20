@@ -121,11 +121,10 @@ class WikimarkupTestCase(unittest.TestCase):
         text = ('<!-- Comment\n\n\n= Heading =\n'
                 'Firefox has <em>hidden</em> <!-- <strong>settings</strong>\n'
                 'more \n-->\n\n# follow\n# by\n\n= Another heading =')
-        assumed =  ('<p><!-- Comment\n</p><p><br />\n</p>\n'
-                    '<h1 id="w_heading">Heading</h1>\n<p>Firefox has '
-                    '<em>hidden</em> <!-- <strong>settings</strong>\nmore \n'
-                    '--&gt;\n</p>\n<ol><li> follow\n</li><li> by\n</li></ol>'
-                    '\n<h1 id="w_another-heading">Another heading</h1>--></p>')
+        assumed = '<p><!-- Comment\n&lt;/p&gt;&lt;p&gt;&lt;br /&gt;\n&lt;/p&gt;\n&lt;h1 id=&quot;w_heading&quot;&gt;Heading&lt;/h1&gt;\n'\
+                  '&lt;p&gt;Firefox has &lt;em&gt;hidden&lt;/em&gt; &lt;!-- &lt;strong&gt;settings&lt;/strong&gt;\n'\
+                  'more \n--&amp;gt;\n&lt;/p&gt;\n&lt;ol&gt;&lt;li&gt; follow\n&lt;/li&gt;&lt;li&gt; by\n&lt;/li&gt;&lt;/ol&gt;\n'\
+                  '&lt;h1 id=&quot;w_another-heading&quot;&gt;Another heading&lt;/h1&gt;--></p>'
         self.assertEqual(parse(text), assumed)
 
     def testLessThanBracket(self):
