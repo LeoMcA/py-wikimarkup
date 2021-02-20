@@ -2067,4 +2067,4 @@ def str2url(strng):
     Takes a UTF-8 string and replaces all characters with the equivalent in 7-bit
     ASCII. It returns a plain ASCII string usable in URLs.
     """
-    return unidecode.unidecode(strng)
+    return unidecode.unidecode(strng, errors="replace")

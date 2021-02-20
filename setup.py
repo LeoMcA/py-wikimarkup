@@ -19,6 +19,6 @@ setup(
     python_requires='>=3.5',
     zip_safe=False,
     include_package_data=True,
-    install_requires=['bleach>=3.0.0,<4.0.0', 'unidecode>=1.0.0,<2.0.0'],
+    install_requires=['bleach>=3.0.0,<4.0.0', 'unidecode>=1.2.0,<2.0.0'],
     package_data = { '': ['README.rst'] },
 )
