@@ -2,6 +2,9 @@
 
 from setuptools import setup, find_packages
 
+with open('requirements.txt') as fd:
+    reqs = [row.strip() for row in fd]
+
 setup(
     name='py-wikimarkup',
     version='2.1.1',
@@ -19,6 +22,6 @@ setup(
     python_requires='>=3.5',
     zip_safe=False,
     include_package_data=True,
-    install_requires=['bleach>=3.0.0,<4.0.0', 'unidecode>=1.2.0,<2.0.0'],
+    install_requires=reqs,
     package_data = { '': ['README.rst'] },
 )
