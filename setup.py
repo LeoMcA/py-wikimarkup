@@ -7,7 +7,7 @@ with open('requirements.txt') as fd:
 
 setup(
     name='py-wikimarkup',
-    version='2.1.1',
+    version='2.1.2',
     packages=find_packages(),
     description='A basic MediaWiki markup parser.',
     long_description=open('README.rst').read(),
@@ -19,7 +19,7 @@ setup(
        'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
        'Programming Language :: Python :: 3 :: Only',
     ],
-    python_requires='>=3.5',
+    python_requires='>=3.6',
     zip_safe=False,
     include_package_data=True,
     install_requires=reqs,
